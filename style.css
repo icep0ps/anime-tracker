@@ -1,17 +1,15 @@
 :root {
-
-  --bg-color: #EAEBED;
-  --tble-color: #FF2E00;
-  --tble-data: #FF5833;
-
+  --bg-color: #eaebed;
+  --tble-color: #ff2e00;
+  --tble-data: #ff5833;
 }
 
 body {
-
   font-family: 'ArcoPerpetuoRegular';
   font-weight: normal;
   font-style: normal;
-  background-color: #EAEBED;
+  background-color: #eaebed;
+  height: 100%;
 }
 
 .container {
@@ -36,28 +34,25 @@ table,
 tr,
 th,
 td {
-
   text-align: center;
   border-collapse: collapse;
   border: 1px solid black;
 }
 
 td {
-
   padding: 10px;
 }
 
 form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 20px;
-  padding-bottom: 30px;
+  display: flex;
   flex-wrap: wrap;
+  padding-bottom: 30px;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-form>div>label {
+form div label {
   display: block;
-
 }
 
 .table {
@@ -66,10 +61,13 @@ form>div>label {
   margin: 0px auto;
 }
 
+form div {
+  width: 200px;
+}
 
-
-form>div>input,
-select {
+form div input,
+select,
+textarea {
   text-transform: capitalize;
   padding: 15px;
   border: none;
@@ -105,29 +103,25 @@ tr:nth-child(odd) td {
   background-color: rgb(245, 245, 245);
 }
 
-form>div>select {
-
+form div select {
   width: 100%;
 }
 
-form>button {
+form button {
   font-size: 0.9rem;
   font-family: 'ArcoPerpetuoRegular';
   font-weight: bolder;
   font-style: normal;
   background-color: var(--tble-color);
   color: white;
-  margin-top: 10px;
-  align-self: center;
   border: none;
   outline: none;
-  border-radius: 30px;
-  height: 50px;
+  border-radius: 15px;
   cursor: pointer;
+  padding: 15px;
 }
 
-td>button {
-
+td button {
   font-size: 0.9rem;
   font-family: 'ArcoPerpetuoRegular';
   font-weight: bolder;
@@ -142,7 +136,17 @@ td>button {
   cursor: pointer;
 }
 
+#notes_wrapper {
+  display: block;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+}
+
 .material-icons {
   font-size: 50px;
-  color: #FF2E00;
+  color: #ff2e00;
 }
