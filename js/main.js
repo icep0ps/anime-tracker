@@ -36,3 +36,16 @@ const deleteAnime = (title) => {
   const row = table.querySelector(`[data-anime="${title}"]`);
   row.remove(row);
 };
+
+window.onload = async () => {
+  const data = await fetch('http://localhost:3000/anime', {
+    method: 'get',
+  });
+
+  const animes = await data.json();
+
+  animes.data.forEach((anime) => {
+    libray.set(anime.title, anime);
+    createAnime(anime);
+  });
+};
