@@ -1,14 +1,20 @@
+import 'dotenv/config';
+import cors from 'cors';
 import express from 'express';
+import bodyParser from 'body-parser';
+
+import Anime from './controllers/anime.js';
+
 const app = express();
 const port = 3000;
 
-app.get('/anime', (req, res) => {
-  res.send('Hello World!');
-});
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/anime', (req, res) => {
-  res.send('Hello World!');
-});
+app.get('/anime', Anime.get);
+
+app.post('/anime', Anime.create);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
