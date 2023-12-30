@@ -1,0 +1,26 @@
+html
+  include mixins/anime/anime.pug
+  head
+    title Home · Anitrack
+    script(src="js/main.js" defer) 
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel="stylesheet", href="https://fontlibrary.org//face/arco-perpetuo", type="text/css", media="screen")
+    link(rel="stylesheet", href="https://fontlibrary.org//face/grammatika", type="text/css", media="screen")
+    link(rel="stylesheet", href="css/main.css", type="text/css")
+    link(rel="stylesheet", href="css/search.css", type="text/css")
+  body
+   .wrapper
+        div
+          a(href="/", class="header") 
+            h1 Anitrack
+            span(class="material-icons") gps_fixed
+        
+        section 
+          h1 Results:
+          .results
+            if results
+              each anime in results   
+                +grid_anime(anime.node)
+            else 
+              h1 no results found 
+              

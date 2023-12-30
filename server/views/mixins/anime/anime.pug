@@ -1,0 +1,19 @@
+mixin table_anime(anime)
+    - const {id,title, rating, progress, type, cover } = anime
+    tr(id=id)
+        td
+            span 
+                img(src=cover, alt="anime_image")
+                h5=title
+        td=rating
+        td=progress
+        td=type
+        
+    
+    
+mixin grid_anime(anime)
+    - const {id, title, main_picture } = anime
+    .grid_anime
+        img(src=main_picture.medium, alt=title)
+        div
+            h5(id=id)=title

@@ -1,0 +1,44 @@
+form {
+  display: flex;
+  padding-bottom: 30px;
+  justify-content: center;
+}
+
+form button {
+  font-size: 0.9rem;
+  font-family: 'ArcoPerpetuoRegular';
+  font-weight: bolder;
+  font-style: normal;
+  background-color: var(--tble-color);
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  cursor: pointer;
+  padding: 15px;
+}
+
+.search_container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 50%;
+  margin: auto 0;
+}
+
+.container {
+  width: 60%;
+  margin: 0px auto;
+}
+
+.search_container {
+  position: relative;
+}
+
+.search_anime {
+  gap: 5px;
+  width: 100%;
+  display: flex;
+  position: absolute;
+  z-index: 10;
+}

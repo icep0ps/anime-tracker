@@ -1,0 +1,10 @@
+.grid_anime {
+  width: 250px;
+}
+.results {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
