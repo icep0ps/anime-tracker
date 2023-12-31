@@ -4,6 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
 
+import authRoute from './routes/auth/route.js';
 import animeRoute from './routes/anime/route.js';
 import searchRoute from './routes/search/route.js';
 import errorHandler from './middleware/errorHandler.js';
@@ -18,15 +19,16 @@ app.use(express.static(path.join(path.resolve(), '/public')));
 
 app.use(cors());
 app.use(errorHandler);
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.use('/search', searchRoute);
+app.use('/auth', authRoute);
 app.use('/anime', animeRoute);
+app.use('/search', searchRoute);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

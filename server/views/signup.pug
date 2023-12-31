@@ -1,0 +1,44 @@
+html
+  include mixins/anime/anime.pug
+  head
+    title Signup · Anitrack
+    script(src="js/main.js" defer) 
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel="stylesheet", href="https://fontlibrary.org//face/arco-perpetuo", type="text/css", media="screen")
+    link(rel="stylesheet", href="https://fontlibrary.org//face/grammatika", type="text/css", media="screen")
+    link(rel="stylesheet", href="/css/auth.css", type="text/css")
+    link(rel="stylesheet", href="/css/main.css", type="text/css")
+  body
+   .wrapper
+        form(action="http://localhost:3000/auth/signup", method="post")
+
+            div(class="header")
+                h1 Anitrack
+                span(class="material-icons") gps_fixed
+            
+            if errors
+                .errors 
+                    p Please fix the following fields 
+                    ul 
+                        each error in errors 
+                            li=`${error.msg} in ${error.path}`             
+            div
+                label(for="username") username
+                input(type="text", name="username" required)
+            
+            div
+                label(for="email") email
+                input(type="email", name="email" required)
+                
+            div
+                label(for="password") password
+                input(type="password", name="password" required)
+                
+            div
+                label(for="confirm_password") confirm password
+                input(type="password", name="confirm_password" required)
+                
+            button(type="submit") login
+            
+ 
+        
