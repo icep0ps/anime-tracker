@@ -27,7 +27,8 @@ html
         section(id="add_anime_wrapper")
           #add_anime_dialogue
             h1(id="anime_title")
-            form(action="", method="post")
+            form(action="http://localhost/anime", method="post")
+              input(type="text", name="id", hidden=true,value=null)
               div 
                 label(for="status") Status
                 select(name="status" required)
