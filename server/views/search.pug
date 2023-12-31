@@ -1,7 +1,7 @@
 html
   include mixins/anime/anime.pug
   head
-    title Home · Anitrack
+    title Search · Anitrack
     script(src="js/main.js" defer) 
     link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
     link(rel="stylesheet", href="https://fontlibrary.org//face/arco-perpetuo", type="text/css", media="screen")
@@ -23,4 +23,46 @@ html
                 +grid_anime(anime.node)
             else 
               h1 no results found 
+              
+        section(id="add_anime_wrapper")
+          #add_anime_dialogue
+            h1(id="anime_title")
+            form(action="", method="post")
+              div 
+                label(for="status") Status
+                select(name="status" required)
+                  option(value="planning") planning 
+                  option(value="watching") watching 
+                  option(value="paused") paused 
+                  option(value="dropped") dropped
+                  option(value="completed") completed 
+                  
+              div 
+                label(for="score") Rating
+                input(type="number", name="score" required max=10) 
+                
+              div 
+                label(for="progress") Episode Progress
+                input(type="number", name="progress" required) 
+              
+              div 
+                label(for="started") Start Date
+                input(type="date", name="started" required)
+                
+              div 
+                label(for="finished") Finish Date
+                input(type="date", name="finished")  
+              
+              div(id="notes") 
+                label(for="notes") notes
+                textarea(name="notes", cols="30", rows="5")
+              
+              button(type="submit") Add to list
+              button(type="button", id="close_dialogue") Close
+              
+              
+              
+          
+          
+        
               
