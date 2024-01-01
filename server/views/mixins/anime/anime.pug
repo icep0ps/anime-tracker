@@ -1,19 +1,29 @@
 mixin table_anime(anime)
-    - const {id,title, rating, progress, type, cover } = anime
-    tr(id=id)
+    - const {title, rating, progress, main_picture,num_episodes } = anime
+    tr(id=title)
         td
             span 
-                img(src=cover, alt="anime_image")
+                img(src=main_picture.medium, alt="anime_image")
                 h5=title
         td=rating
-        td=progress
-        td=type
+        td=progress +"/" + num_episodes
         
-    
-    
 mixin grid_anime(anime)
     - const {id, title, main_picture } = anime
     .grid_anime(id=id data-title=title)
         img(src=main_picture.medium, alt=title)
         div
             h5(id=id)=title
+            
+mixin status_table(status,entries)
+    section(id=status)
+        h2=status
+            table
+                tbody 
+                    tr 
+                        td title
+                        td rating
+                        td progress
+                    each anime in entries 
+                        +table_anime(anime)
+                    

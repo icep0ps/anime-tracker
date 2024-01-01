@@ -20,16 +20,10 @@ html
                 button(type="submit") search
             
         section(id="container")
-            h2 My Anime
+            - for(const [status,entries] of list)
+              +status_table(status,entries)
             
-            section(id="watching")
-                table
-                    tbody 
-                        tr 
-                            td title
-                            td rating
-                            td progress
-                            td type
+
     
             
             
