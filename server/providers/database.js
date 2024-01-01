@@ -106,9 +106,10 @@ class Database {
     async entries(userid) {
       const connection = await Database.connect();
       const [results] = await connection
-        .query('SELECT * FROM `entry` WHERE `user_id` = ? ORDER BY `title` ASC;', [
-          userid,
-        ])
+        .query(
+          'SELECT entry.user_id, anime.main_picture, anime.title, entry.rating, progress, entry.status, anime.num_episodes FROM `entry` INNER JOIN `anime` ON entry.anime_id=anime.id;',
+          [userid]
+        )
         .catch((error) => {
           throw new Error('Error getting anime list from database ' + error);
         });
