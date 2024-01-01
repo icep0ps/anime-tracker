@@ -27,7 +27,7 @@ html
         section(id="add_anime_wrapper")
           #add_anime_dialogue
             h1(id="anime_title")
-            form(action="http://localhost/anime", method="post")
+            form(action="http://localhost:3000/anime", method="post")
               input(type="text", name="id", hidden=true,value=null)
               div 
                 label(for="status") Status
@@ -39,8 +39,8 @@ html
                   option(value="completed") completed 
                   
               div 
-                label(for="score") Rating
-                input(type="number", name="score" required max=10) 
+                label(for="rating") Rating
+                input(type="number", name="rating" required max=10) 
                 
               div 
                 label(for="progress") Episode Progress
@@ -52,11 +52,11 @@ html
                 
               div 
                 label(for="finished") Finish Date
-                input(type="date", name="finished")  
+                input(type="date", name="finished",value=null)  
               
               div(id="notes") 
                 label(for="notes") notes
-                textarea(name="notes", cols="30", rows="5")
+                textarea(name="notes", cols="30", rows="5", value="")
               
               button(type="submit") Add to list
               button(type="button", id="close_dialogue") Close
