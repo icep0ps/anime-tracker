@@ -1,8 +1,8 @@
 import express from 'express';
-import Anilist from '../../controllers/anilist.js';
+import Myanimelist from '../../controllers/myanimelist.js';
 
 const router = express.Router();
 
-router.post('/', Anilist.search);
+router.post('/', Myanimelist.search);
 
 export default router;

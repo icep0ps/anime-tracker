@@ -1,6 +1,5 @@
-import axios from 'axios';
-import Locals from '../providers/locals.js';
 import Database from '../providers/database.js';
+import Myanimelist from './myanimelist.js';
 
 class Anime {
   static fields =
@@ -22,9 +21,8 @@ class Anime {
           1,
           id
         );
-        response.redirect('/');
       } else {
-        const anime = await Anime.getAnimeDetails(id);
+        const anime = await Myanimelist.getAnimeDetails(id);
         await Database.create.anime(anime);
         await Database.create.entry(
           status,
@@ -37,26 +35,11 @@ class Anime {
           id
         );
       }
+
+      return response.redirect('/');
     } catch (error) {
       next(error);
     }
-  }
-
-  static async getAnimeDetails(id) {
-    const { data } = await axios
-      .get('https://api.myanimelist.net/v2/anime/' + id, {
-        headers: {
-          'X-MAL-CLIENT-ID': Locals.config().apiClientId,
-        },
-        params: {
-          fields: Anime.fields,
-        },
-      })
-      .catch((error) => {
-        throw new Error('Failed to get anime data: ', error);
-      });
-
-    return data;
   }
 
   static async get(request, response, next) {
