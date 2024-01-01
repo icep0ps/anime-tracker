@@ -4,6 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
 
+import Home from './controllers/home.js';
 import authRoute from './routes/auth/route.js';
 import animeRoute from './routes/anime/route.js';
 import searchRoute from './routes/search/route.js';
@@ -22,10 +23,7 @@ app.use(errorHandler);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
+app.get('/', Home.load);
 app.use('/auth', authRoute);
 app.use('/anime', animeRoute);
 app.use('/search', searchRoute);
