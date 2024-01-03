@@ -4,8 +4,6 @@ form {
   justify-content: center;
 }
 
-
-
 .search_container {
   display: flex;
   justify-content: center;
@@ -29,4 +27,15 @@ form {
   display: flex;
   position: absolute;
   z-index: 10;
+}
+
+td span {
+  gap: 5px;
+  display: flex;
+  align-items: center;
+}
+
+td img {
+  height: 60px;
+  width: 40px;
 }
