@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.get('/', Anime.get);
 router.post('/', Anime.create);
+router.delete('/', Anime.delete);
 
 export default router;

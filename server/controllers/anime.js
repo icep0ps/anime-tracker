@@ -45,6 +45,16 @@ class Anime {
   static async get(request, response, next) {
     response.json({ data: Database.get.entries(1) }).catch((error) => next(error));
   }
+
+  static async delete(request, response, next) {
+    const { anime_id, user_id } = request.body;
+    await Database.delete
+      .entry(user_id, anime_id)
+      .then(() => {
+        return response.json({ msg: 'deleted anime from your entries' });
+      })
+      .catch((error) => next(error));
+  }
 }
 
 export default Anime;

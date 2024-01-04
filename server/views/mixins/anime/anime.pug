@@ -7,6 +7,9 @@ mixin table_anime(anime)
                 h5=title
         td=rating
         td=progress +"/" + num_episodes
+        td(id="button_wrapper")
+            button(type="button" onclick="openDialogue(event)" id=anime.id data-title=title) edit
+            button(type="button" onclick="deleteEntry(event)" id=anime.id) delete
         
 mixin grid_anime(anime)
     - const {id, title, main_picture } = anime
@@ -18,12 +21,17 @@ mixin grid_anime(anime)
 mixin status_table(status,entries)
     section(id=status)
         h2=status
-            table
-                tbody 
-                    tr 
-                        td title
-                        td rating
-                        td progress
+        table
+            tbody 
+                tr 
+                    td title
+                    td rating
+                    td progress
+                    td options
+                if entries.length > 0
                     each anime in entries 
                         +table_anime(anime)
+                else
+                    tr 
+                        td nothing here
                     

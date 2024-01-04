@@ -107,7 +107,7 @@ class Database {
       const connection = await Database.connect();
       const [results] = await connection
         .query(
-          'SELECT entry.user_id, anime.main_picture, anime.title, entry.rating, progress, entry.status, anime.num_episodes FROM `entry` INNER JOIN `anime` ON entry.anime_id=anime.id;',
+          'SELECT entry.user_id, anime.main_picture,anime.id , anime.title, entry.rating, progress, entry.status, anime.num_episodes FROM `entry` INNER JOIN `anime` ON entry.anime_id=anime.id;',
           [userid]
         )
         .catch((error) => {
@@ -123,6 +123,25 @@ class Database {
         .catch((error) => {
           throw new Error('Error getting anime from database ' + error);
         });
+      return results;
+    },
+  };
+
+  static delete = {
+    async entry(userid, entryid) {
+      const connection = await Database.connect().catch((error) => {
+        throw new Error('Error connection to database ' + error);
+      });
+
+      const [results] = await connection
+        .execute('DELETE FROM `entry` WHERE user_id= ? AND anime_id= ?;', [
+          userid,
+          entryid,
+        ])
+        .catch((error) => {
+          throw new Error('Error creating user in database ' + error);
+        });
+
       return results;
     },
   };
