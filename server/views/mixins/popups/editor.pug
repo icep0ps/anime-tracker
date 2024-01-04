@@ -1,0 +1,37 @@
+mixin editor 
+    section(id="add_anime_wrapper")
+        #add_anime_dialogue
+            h1(id="anime_title")
+            form(action="http://localhost:3000/anime", method="post")
+                input(type="text", name="id", hidden=true,value=null)
+                div 
+                    label(for="status") Status
+                    select(name="status" required)
+                        option(value="planning") planning 
+                        option(value="watching") watching 
+                        option(value="paused") paused 
+                        option(value="dropped") dropped
+                        option(value="completed") completed 
+                      
+                div 
+                    label(for="rating") Rating
+                    input(type="number", name="rating" required max=10) 
+                    
+                div 
+                    label(for="progress") Episode Progress
+                    input(type="number", name="progress" required) 
+                  
+                div 
+                    label(for="started") Start Date
+                    input(type="date", name="started" required)
+                    
+                div 
+                    label(for="finished") Finish Date
+                    input(type="date", name="finished",value=null)  
+                  
+                div(id="notes") 
+                    label(for="notes") notes
+                    textarea(name="notes", cols="30", rows="5", value="")
+                  
+                button(type="submit") Add to list
+                button(type="button", id="close_dialogue") Close

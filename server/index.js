@@ -29,5 +29,5 @@ app.use('/anime', animeRoute);
 app.use('/search', searchRoute);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`App ready at http://localhost:${port}`);
 });
