@@ -1,47 +1,4 @@
-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-}
 
-form div {
-  width: 250px;
-}
-
-
-
-input,
-select,
-textarea {
-  background-color: #27272a;
-  color: white;
-}
-
-#add_anime_wrapper {
-  top: 0;
-  display: none;
-  position: fixed;
-  height: 100%;
-  width: 80%;
-  max-width: 1048px;
-  background-color: #000000bd;
-  justify-content: center;
-}
-
-#add_anime_dialogue {
-  top: 10%;
-  padding: 30px;
-  position: absolute;
-  background-color: #18181b;
-  border-radius: 15px;
-  width: 90%;
-}
-
-#notes {
-  display: block;
-  width: 100%;
-}
 
 .grid_anime {
   width: 250px;

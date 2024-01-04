@@ -1,24 +1,13 @@
-form {
-  display: flex;
-  padding-bottom: 30px;
-  justify-content: center;
-}
 
-.search_container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  width: 50%;
-  margin: auto 0;
-}
 
-.container {
-  width: 60%;
+#container {
+  width: 80%;
   margin: 0px auto;
-}
-
-.search_container {
-  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+  justify-content: flex-start;
+  gap: 30px;
 }
 
 .search_anime {
@@ -27,6 +16,16 @@ form {
   display: flex;
   position: absolute;
   z-index: 10;
+}
+
+#button_wrapper button {
+  width: 80px;
+}
+
+#button_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 td span {
