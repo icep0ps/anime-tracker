@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --detectOpenHandles --silent",
     "dev": "nodemon server/index.js"
   },
   "keywords": [],
@@ -25,6 +25,7 @@
     "@babel/preset-env": "^7.23.7",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "supertest": "^6.3.3"
   }
 }
