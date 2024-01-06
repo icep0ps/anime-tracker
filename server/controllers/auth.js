@@ -1,5 +1,3 @@
-import express from 'express';
-import Database from '../providers/database.js';
 import { validationResult } from 'express-validator';
 
 class Auth {
@@ -17,8 +15,8 @@ class Auth {
     if (errors.array().length)
       return response.status(400).render('signup', { errors: errors.array() });
 
-    const user = await Database.create.user(request.body);
-    response.redirect('/');
+    await request.db.create.user(request.body).catch((error) => next(error));
+    return response.redirect('/');
   }
 
   static async login(request, response, next) {
@@ -27,8 +25,8 @@ class Auth {
       return response.status(400).render('login', { errors: errors.array() });
 
     const { username, password } = request.body;
-    const user = await Database.get.user(username, password);
-    response.redirect('/');
+    await request.db.get.user(username, password).catch((error) => next(error));
+    return response.redirect('/');
   }
 }
 

@@ -1,0 +1,67 @@
+import Myanimelist from './myanimelist.js';
+
+class Entry {
+  static fields =
+    'id,title,main_picture,alternative_titles,synopsis,genres,num_episodes,rating,pictures,background,statistics';
+
+  static async create(request, response, next) {
+    try {
+      const { id, status, progress, rating, notes, started, finished } = request.body;
+      const animeExists = await request.db.get.anime(id);
+
+      if (animeExists.length) {
+        await request.db.create.entry(
+          status,
+          progress,
+          rating,
+          notes,
+          started,
+          finished,
+          1,
+          id
+        );
+      } else {
+        const anime = await Myanimelist.getAnimeDetails(id);
+        await request.db.create.anime(anime);
+        await request.db.create.entry(
+          status,
+          progress,
+          rating,
+          notes,
+          started,
+          finished,
+          1,
+          id
+        );
+      }
+
+      return response.redirect('/');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static get = {
+    async userEntries(request, response, next) {
+      const entries = await request.db.get.entries(1).catch((error) => next(error));
+      response.json({ data: entries });
+    },
+
+    async entry(request, response, next) {
+      const entry = await request.db.get.entries(1);
+      response.json({ data: entry }).catch((error) => next(error));
+    },
+  };
+
+  static async delete(request, response, next) {
+    const { anime_id, user_id } = request.body;
+    await request.db.delete
+      .entry(user_id, anime_id)
+      .then(() => {
+        return response.json({ msg: 'deleted anime from your entries' });
+      })
+      .catch((error) => next(error));
+  }
+}
+
+export default Entry;

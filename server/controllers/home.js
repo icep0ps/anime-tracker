@@ -1,9 +1,8 @@
-import Database from '../providers/database.js';
-
 class Home {
   static async load(request, response, next) {
-    const animes = await Database.get.entries(1).catch((error) => next(error));
+    const animes = await request.db.get.entries(1).catch((error) => next(error));
     response.render('index', { list: Home.groupByStatus(animes) });
+    return;
   }
 
   static groupByStatus(animes) {
