@@ -1,14 +1,21 @@
 import 'dotenv/config';
 import mysql from 'mysql2/promise';
-import Anime from '../controllers/anime.js';
+import Anime from '../controllers/entry.js';
 
 class Database {
   static async connect() {
-    return await mysql.createConnection({
+    return mysql.createPool({
       host: process.env.HOST,
       user: process.env.USER,
       database: process.env.DATABASE,
       password: process.env.PASSWORD,
+      waitForConnections: true,
+      connectionLimit: 10,
+      maxIdle: 10,
+      idleTimeout: 60000,
+      queueLimit: 0,
+      enableKeepAlive: true,
+      keepAliveInitialDelay: 0,
     });
   }
 
@@ -112,6 +119,19 @@ class Database {
         )
         .catch((error) => {
           throw new Error('Error getting anime list from database ' + error);
+        });
+      return results;
+    },
+
+    async entry(userid, entryid) {
+      const connection = await Database.connect();
+      const [results] = await connection
+        .query(
+          'SELECT entry.user_id, anime.main_picture,anime.id , anime.title, entry.rating, progress, entry.status, anime.num_episodes FROM `entry` INNER JOIN `anime` ON entry.anime_id=anime.id WHERE entry.user_id = ? AND entry.anime_id = ?;',
+          [userid, entryid]
+        )
+        .catch((error) => {
+          throw new Error('Error getting entry from database ' + error);
         });
       return results;
     },
