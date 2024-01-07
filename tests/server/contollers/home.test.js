@@ -1,5 +1,19 @@
+import App from '../../../server/app.js';
 import Entry from '../../mocks/classes/entry.js';
 import Home from '../../../server/controllers/home.js';
+import Database from '../../mocks/providers/database.js';
+import request from 'supertest';
+
+const app = App.init(Database);
+
+describe('GET /', () => {
+  describe('loads homepage', () => {
+    test('status code 200', async () => await request(app).get('/').expect(200));
+
+    test('returns content type html', async () =>
+      request(app).get('/').expect('Content-Type', /html/));
+  });
+});
 
 describe('Methods are producing desired outputs', () => {
   describe('groupByStauts', () => {

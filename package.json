@@ -5,8 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --detectOpenHandles --silent",
-    "dev": "nodemon server/index.js"
+    "test": "jest --watch --detectOpenHandles ",
+    "dev": "nodemon server/server.js"
   },
   "keywords": [],
   "author": "icep0ps",

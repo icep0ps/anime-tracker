@@ -12,12 +12,12 @@ class Database {
     async user(username, password) {},
 
     async entries(userid) {
-      return [
+      return Promise.resolve([
         new Entry(userid, 1, 'watching'),
         new Entry(userid, 2, 'dropped'),
         new Entry(userid, 3, 'watching'),
         new Entry(userid, 4, 'paused'),
-      ];
+      ]);
     },
 
     async entry(userid, entryid) {},
