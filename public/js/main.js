@@ -1,16 +1,55 @@
-const openDialogue = (event) => {
+const openDialogue = async (event) => {
   document.getElementById('add_anime_wrapper').style.display = 'flex';
+
   event.stopPropagation();
 
   const id = event.currentTarget.id;
   const tite = event.currentTarget.dataset.title;
-
   document.querySelector('input[name="id"]').value = id;
-  document.getElementById('anime_title').textContent = tite;
+
+  loadAnimeData(id).then((anime) => {
+    if (anime)
+      document
+        .querySelector('input[name="progress"]')
+        .setAttribute('max', anime.num_episodes);
+  });
+
+  loadEntryData(id).then((entry) => {
+    if (entry) {
+      document.getElementById('anime_title').textContent = tite;
+      document.getElementById('tracking').style.display = 'block';
+      document.getElementById('add_to_db_btn').textContent = 'Update';
+      document.querySelector('select[name="status"]').value = entry.status;
+      document.querySelector('input[name="rating"]').value = entry.rating;
+      document.querySelector('input[name="progress"]').value = entry.progress;
+      document.querySelector('input[name="started"]').value = entry.started;
+      document.querySelector('input[name="finished"]').value = entry.finished;
+      document.querySelector('textarea[name="notes"]').value = entry.notes;
+    } else {
+      document.getElementById('tracking').style.display = 'none';
+      document.getElementById('add_to_db_btn').textContent = 'Add to list';
+    }
+  });
+};
+
+const loadEntryData = async (entryid) => {
+  const data = await fetch('http://localhost:3000/entry/' + entryid, {
+    method: 'GET',
+  });
+  const entry = await data.json();
+  return entry.data[0];
+};
+
+const loadAnimeData = async (animeid) => {
+  const data = await fetch('http://localhost:3000/search/' + animeid, {
+    method: 'GET',
+  });
+  const entry = await data.json();
+  return entry.data;
 };
 
 const deleteEntry = async (event) => {
-  const res = await fetch('http://localhost:3000/anime/', {
+  const res = await fetch('http://localhost:3000/entry/', {
     method: 'delete',
     body: JSON.stringify({
       user_id: 1,

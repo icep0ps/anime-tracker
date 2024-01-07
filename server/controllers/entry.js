@@ -42,14 +42,17 @@ class Entry {
   }
 
   static get = {
-    async userEntries(request, response, next) {
+    async entries(request, response, next) {
       const entries = await request.db.get.entries(1).catch((error) => next(error));
       response.json({ data: entries });
     },
 
     async entry(request, response, next) {
-      const entry = await request.db.get.entries(1);
-      response.json({ data: entry }).catch((error) => next(error));
+      const entry_id = request.params.id;
+
+      const entry = await request.db.get.entry(1, entry_id).catch((error) => next(error));
+      console.log(entry);
+      response.json({ data: entry });
     },
   };
 

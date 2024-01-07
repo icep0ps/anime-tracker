@@ -2,7 +2,8 @@ mixin editor
     section(id="add_anime_wrapper")
         #add_anime_dialogue
             h1(id="anime_title")
-            form(action="http://localhost:3000/anime", method="post")
+            span(id="tracking") Tracking
+            form(action="http://localhost:3000/entry", method="post")
                 input(type="text", name="id", hidden=true,value=null)
                 div 
                     label(for="status") Status
@@ -33,5 +34,5 @@ mixin editor
                     label(for="notes") notes
                     textarea(name="notes", cols="30", rows="5", value="")
                   
-                button(type="submit") Add to list
+                button(type="submit" id="add_to_db_btn") Add to list
                 button(type="button", id="close_dialogue") Close

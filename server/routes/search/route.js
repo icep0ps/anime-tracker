@@ -5,4 +5,11 @@ const router = express.Router();
 
 router.post('/', Myanimelist.search);
 
+router.get('/:id', async (request, response, next) => {
+  const anime = await Myanimelist.getAnimeDetails(request.params.id).catch((error) =>
+    next(error)
+  );
+  response.json({ data: anime });
+});
+
 export default router;
