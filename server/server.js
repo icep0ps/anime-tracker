@@ -1,4 +1,4 @@
-import App from './app';
-import Database from './providers/database';
+import App from './app.js';
+import Database from './providers/database.js';
 
-const server = new App(Database);
+const server = App.init(Database);
