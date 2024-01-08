@@ -147,6 +147,36 @@ class Database {
     },
   };
 
+  static update = {
+    async entry(entry) {
+      const { id, rating, progress, status, notes, started, finished } = entry;
+
+      const connection = await Database.connect().catch((error) => {
+        throw new Error('Error connection to database ' + error);
+      });
+
+      const [results] = await connection
+        .execute(
+          'UPDATE `entry` status SET status = ? ,rating = ? ,progress= ? ,started = ? ,finished = ?, notes = ? WHERE user_id = ? AND anime_id = ?;',
+          [
+            status,
+            rating,
+            progress,
+            started !== '' ? started : null,
+            finished !== '' ? finished : null,
+            notes,
+            1,
+            id,
+          ]
+        )
+        .catch((error) => {
+          throw new Error('Error updating entry in database ' + error);
+        });
+
+      return results;
+    },
+  };
+
   static delete = {
     async entry(userid, entryid) {
       const connection = await Database.connect().catch((error) => {

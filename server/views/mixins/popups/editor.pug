@@ -3,7 +3,7 @@ mixin editor
         #add_anime_dialogue
             h1(id="anime_title")
             span(id="tracking") Tracking
-            form(action="http://localhost:3000/entry", method="post")
+            form(action="http://localhost:3000/entry", method="post" id="editor")
                 input(type="text", name="id", hidden=true,value=null)
                 div 
                     label(for="status") Status

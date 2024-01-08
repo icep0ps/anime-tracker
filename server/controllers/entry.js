@@ -49,12 +49,16 @@ class Entry {
 
     async entry(request, response, next) {
       const entry_id = request.params.id;
-
       const entry = await request.db.get.entry(1, entry_id).catch((error) => next(error));
-      console.log(entry);
       response.json({ data: entry });
     },
   };
+
+  static async update(request, response, next) {
+    const entry = request.body;
+    await request.db.update.entry(entry).catch((error) => next(error));
+    response.redirect('back');
+  }
 
   static async delete(request, response, next) {
     const { anime_id, user_id } = request.body;
