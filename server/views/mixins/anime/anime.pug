@@ -1,10 +1,10 @@
 mixin table_anime(anime)
     - const {title, rating, progress, main_picture,num_episodes } = anime
     tr(id=title)
-        td
+        td(colspan="2")
             span 
                 img(src=main_picture.medium, alt="anime_image")
-                h5=title
+                h5(title=title)=title
         td=rating
         td=progress +"/" + num_episodes
         td(id="button_wrapper")
@@ -25,6 +25,7 @@ mixin status_table(status,entries)
             tbody 
                 tr 
                     td title
+                    td
                     td rating
                     td progress
                     td options
@@ -33,5 +34,5 @@ mixin status_table(status,entries)
                         +table_anime(anime)
                 else
                     tr 
-                        td nothing here
+                        td(colspan="5") nothing here
                     

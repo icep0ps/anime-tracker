@@ -14,6 +14,7 @@ select,
 textarea {
   background-color: #27272a;
   color: white;
+  width: 100%;
 }
 
 #notes {
@@ -33,10 +34,9 @@ textarea {
 }
 
 #add_anime_dialogue {
-  top: 10%;
   padding: 30px;
   position: absolute;
   background-color: #18181b;
   border-radius: 15px;
-  width: 90%;
+  width: 100%;
 }
