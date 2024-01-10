@@ -46,6 +46,17 @@ class App {
     app.use(passport.initialize());
     app.use(passport.session());
     passport.use(new LocalStrategy({ passReqToCallback: true }, Auth.authenticate));
+    passport.serializeUser(function (user, cb) {
+      process.nextTick(function () {
+        cb(null, { id: user.id, username: user.username });
+      });
+    });
+
+    passport.deserializeUser(function (user, cb) {
+      process.nextTick(function () {
+        return cb(null, user);
+      });
+    });
 
     app.get('/', exposeDatabase, Home.load);
     app.use('/auth', exposeDatabase, authRoute);

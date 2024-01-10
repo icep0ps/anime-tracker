@@ -19,6 +19,11 @@ class Database {
     });
   }
 
+  static async connection() {
+    const connection = await Database.connect();
+    return connection;
+  }
+
   static create = {
     async entry(status, progress, rating, notes, started, finished, userid, animeid) {
       const connection = await Database.connect();
