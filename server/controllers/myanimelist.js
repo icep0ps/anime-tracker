@@ -12,7 +12,7 @@ class Myanimelist {
         q: request.body.search,
         limit: 10,
       },
-    }).catch((error) => nextTick(error));
+    }).catch((error) => next(error));
 
     return response.render('search', { results: results.data });
   }
