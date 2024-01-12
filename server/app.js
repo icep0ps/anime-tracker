@@ -42,7 +42,6 @@ class App {
         saveUninitialized: false,
       })
     );
-
     app.use(passport.initialize());
     app.use(passport.session());
     passport.use(new LocalStrategy({ passReqToCallback: true }, Auth.authenticate));
@@ -51,11 +50,15 @@ class App {
         cb(null, { id: user.id, username: user.username });
       });
     });
-
     passport.deserializeUser(function (user, cb) {
       process.nextTick(function () {
         return cb(null, user);
       });
+    });
+
+    app.use((req, res, next) => {
+      res.locals.user = req.user;
+      next();
     });
 
     app.get('/', exposeDatabase, Home.load);

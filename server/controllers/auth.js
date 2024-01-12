@@ -15,11 +15,6 @@ class Auth {
     const errors = validationResult(request);
     if (errors.array().length)
       return response.status(400).render('login', { errors: errors.array() });
-
-    return passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-    });
   }
 
   static logout(request, response, next) {
@@ -59,17 +54,15 @@ class Auth {
                 username: request.body.username,
               };
 
-              console.log(user);
-
               request.login(user, function (err) {
                 if (err) {
                   return next(err);
                 }
+
                 response.redirect('/');
               });
             })
             .catch((err) => {
-              console.log(err, this.lastID);
               return next(err);
             });
         });
@@ -78,34 +71,36 @@ class Auth {
   }
 
   static async authenticate(request, username, password, cb) {
-    await request.db.execute(
-      'SELECT * FROM user WHERE username = ?',
-      [username],
-      function (err, row) {
-        if (err) {
-          return cb(err);
-        }
-        if (!row) {
-          return cb(null, false, { message: 'Incorrect username or password.' });
-        }
-        crypto.pbkdf2(
-          password,
-          row.salt,
-          310000,
-          32,
-          'sha256',
-          function (err, hashedPassword) {
-            if (err) {
-              return cb(err);
-            }
-            if (!crypto.timingSafeEqual(row.hashed_password, hashedPassword)) {
-              return cb(null, false, { message: 'Incorrect username or password.' });
-            }
-            return cb(null, row);
+    request.db.connection().then((connection) => {
+      connection
+        .execute({
+          sql: 'SELECT * FROM user WHERE username = ?',
+          values: [username],
+        })
+        .then((results) => {
+          const row = results[0][0];
+          if (!row) {
+            return cb(null, false, { message: 'Incorrect username or password.' });
           }
-        );
-      }
-    );
+
+          crypto.pbkdf2(
+            password,
+            row.salt,
+            310000,
+            32,
+            'sha256',
+            function (err, hashedPassword) {
+              if (err) {
+                return cb(err);
+              }
+              if (!crypto.timingSafeEqual(row.password, hashedPassword)) {
+                return cb(null, false, { message: 'Incorrect username or password.' });
+              }
+              return cb(null, row);
+            }
+          );
+        });
+    });
   }
 }
 

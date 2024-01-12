@@ -1,6 +1,8 @@
 html
+  include mixins/user.pug
   include mixins/anime/anime.pug
   include mixins/popups/editor.pug
+  
   head
     title Home · Anitrack
     script(src="js/main.js" defer) 
@@ -15,6 +17,8 @@ html
         div(class="header")
             h1 Anitrack
             span(class="material-icons") gps_fixed
+        if user
+          +user(user)
             
         form(action="http://localhost:3000/search", method="post", id="search_form")
             .search_container

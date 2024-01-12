@@ -1,8 +1,14 @@
 class Home {
   static async load(request, response, next) {
-    const animes = await request.db.get.entries(1).catch((error) => next(error));
+    console.log(request.session);
+    if (!request.user) {
+      return response.redirect('/auth/login');
+    }
+
+    const animes = await request.db.get
+      .entries(request.user.id)
+      .catch((error) => next(error));
     response.render('index', { list: Home.groupByStatus(animes) });
-    return;
   }
 
   static groupByStatus(animes) {
