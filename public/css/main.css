@@ -130,6 +130,10 @@ td h5 {
   color: white;
 }
 
+.header h1 {
+  margin-bottom: 5px;
+}
+
 .wrapper {
   margin: 0 auto;
   max-width: 1280px;
@@ -151,6 +155,12 @@ td h5 {
   width: fit-content;
   font-size: 10px;
   margin-bottom: 15px;
+}
+#user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .search_container {
