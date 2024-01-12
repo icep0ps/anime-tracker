@@ -16,6 +16,8 @@ html
           a(href="/", class="header") 
             h1 Anitrack
             span(class="material-icons") gps_fixed
+        if user
+          +user(user)
             
         form(action="http://localhost:3000/search", method="post", id="search_form")
             .search_container

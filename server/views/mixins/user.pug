@@ -1,0 +1,6 @@
+mixin user(user)
+    - const {id, username} = user
+    div(id="user")
+        h3(id=id)=username
+        a(href="http://localhost:3000/auth/logout")
+            button(type="button") Logout
