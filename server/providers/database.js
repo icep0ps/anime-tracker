@@ -119,7 +119,7 @@ class Database {
       const connection = await Database.connect();
       const [results] = await connection
         .query(
-          'SELECT entry.user_id, anime.main_picture,anime.id , anime.title, entry.rating, progress, entry.status, anime.num_episodes FROM `entry` INNER JOIN `anime` ON entry.anime_id=anime.id;',
+          'SELECT entry.user_id, anime.main_picture,anime.id , anime.title, entry.rating, progress, entry.status, anime.num_episodes FROM `entry` INNER JOIN `anime` ON entry.anime_id=anime.id WHERE entry.user_id=?;',
           [userid]
         )
         .catch((error) => {
@@ -153,7 +153,7 @@ class Database {
   };
 
   static update = {
-    async entry(entry) {
+    async entry(userid, entry) {
       const { id, rating, progress, status, notes, started, finished } = entry;
 
       const connection = await Database.connect().catch((error) => {
@@ -170,7 +170,7 @@ class Database {
             started !== '' ? started : null,
             finished !== '' ? finished : null,
             notes,
-            1,
+            userid,
             id,
           ]
         )
