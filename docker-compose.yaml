@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    container_name: anime_tracker_app
+    expose:
+      - 3000
+    ports:
+      - '3000:3000'
+
+  db:
+    image: mysql
+    container_name: anime_tracker_database
+    environment:
+      - MYSQL_USER=${USER}
+      - MYSQL_ROOT_HOST=${HOST}
+      - MYSQL_DATABASE=${DATABASE}
+      - MYSQL_ROOT_PASSWORD=${PASSWORD}
