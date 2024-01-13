@@ -1,6 +1,5 @@
 class Home {
   static async load(request, response, next) {
-    console.log(request.session);
     if (!request.user) {
       return response.redirect('/auth/login');
     }
