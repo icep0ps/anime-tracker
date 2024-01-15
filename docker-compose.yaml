@@ -11,7 +11,11 @@ services:
     image: mysql
     container_name: anime_tracker_database
     environment:
-      - MYSQL_USER=${USER}
-      - MYSQL_ROOT_HOST=${HOST}
+      - MYSQL_ROOT_HOST=%
       - MYSQL_DATABASE=${DATABASE}
       - MYSQL_ROOT_PASSWORD=${PASSWORD}
+    ports:
+      - '3307:3306'
+    volumes:
+      - ./anime_tracker.session.sql:/tmp/database/anime_tracker.session.sql
+    command: mysqld --init-file="/tmp/database/anime_tracker.session.sql"

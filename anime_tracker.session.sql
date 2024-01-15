@@ -1,13 +1,18 @@
-CREATE TABLE `User` (
+CREATE DATABASE IF NOT EXISTS `anime_tracker`;
+
+USE `anime_tracker`;
+
+CREATE TABLE IF NOT EXISTS `user` (
 `id` INT AUTO_INCREMENT NOT NULL,
 `username` VARCHAR(60) NOT NULL UNIQUE,
-`password` VARCHAR(1024) NOT NULL,
+`password` VARBINARY(60) NOT NULL,
+`salt` VARBINARY(60) NOT NULL,
 `joined` DATE DEFAULT (CURRENT_DATE) NOT NULL,
 `email` VARCHAR(60) NOT NULL UNIQUE,
 PRIMARY KEY(`id`)
 );
 
-CREATE TABLE `Anime` (
+CREATE TABLE IF NOT EXISTS `anime` (
   `id` BIGINT,
   `title` VARCHAR(1024),
   `main_picture` JSON,
@@ -43,7 +48,7 @@ CREATE TABLE `Anime` (
   PRIMARY KEY(`id`)
 );
 
-CREATE TABLE `Entry` (
+CREATE TABLE IF NOT EXISTS `entry` (
 `status` VARCHAR(1024) NOT NULL, 
 `rating` SMALLINT(10) NOT NULL,
 `progress` INT DEFAULT 0,
@@ -51,7 +56,7 @@ CREATE TABLE `Entry` (
 `finished` DATE,
 `user_id` INT,
 `anime_id` BIGINT,
-FOREIGN KEY(`user_id`) REFERENCES `User`(`id`), 
-FOREIGN KEY(`anime_id`) REFERENCES `Anime`(`id`) ,
+FOREIGN KEY(`user_id`) REFERENCES `user`(`id`), 
+FOREIGN KEY(`anime_id`) REFERENCES `anime`(`id`) ,
 PRIMARY KEY(`user_id`,`anime_id`)
 );
