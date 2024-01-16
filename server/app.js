@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import path from 'path';
 import cors from 'cors';
+import morgan from 'morgan';
 import express from 'express';
 import passport from 'passport';
 import bodyParser from 'body-parser';
@@ -8,9 +9,9 @@ import session from 'express-session';
 import LocalStrategy from 'passport-local';
 
 import Auth from './controllers/auth.js';
-import Home from './controllers/home.js';
 
 import authRoute from './routes/auth/route.js';
+import homeRoute from './routes/home/route.js';
 import entryRoute from './routes/entry/route.js';
 import searchRoute from './routes/search/route.js';
 import errorHandler from './middleware/errorHandler.js';
@@ -33,6 +34,7 @@ class App {
 
     app.use(cors());
     app.use(errorHandler);
+    app.use(morgan('tiny'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(
@@ -61,13 +63,16 @@ class App {
       next();
     });
 
-    app.get('/', exposeDatabase, Home.load);
+    app.get('/', exposeDatabase, homeRoute);
     app.use('/auth', exposeDatabase, authRoute);
     app.use('/entry', exposeDatabase, entryRoute);
     app.use('/search', searchRoute);
 
     if (process.env.NODE_ENV !== 'test') {
-      app.listen(port, () => console.log(`Listening on port ${port}`));
+      app.listen(port, () => {
+        console.log('App running in ' + process.env.NODE_ENV);
+        console.log(`Listening on port ${port}`);
+      });
     }
     return app;
   }
