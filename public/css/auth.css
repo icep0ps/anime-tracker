@@ -27,6 +27,10 @@ li {
   color: red;
 }
 
+form a {
+  color: #ff2e00;
+}
+
 .errors {
   display: flex;
   flex-direction: column;
