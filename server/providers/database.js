@@ -1,14 +1,18 @@
 import 'dotenv/config';
 import mysql from 'mysql2/promise';
 import Anime from '../controllers/entry.js';
+import Locals from './locals.js';
 
 class Database {
   static async connect() {
+    const { port, host, database, user, password } = Locals.config();
+
     return mysql.createPool({
-      host: process.env.HOST,
-      user: process.env.USER,
-      database: process.env.DATABASE,
-      password: process.env.PASSWORD,
+      host,
+      user,
+      database,
+      password,
+      port,
       waitForConnections: true,
       connectionLimit: 10,
       maxIdle: 10,
