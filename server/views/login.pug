@@ -2,7 +2,6 @@ html
   include mixins/anime/anime.pug
   head
     title Login · Anitrack
-    script(src="js/main.js" defer) 
     link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
     link(rel="stylesheet", href="https://fontlibrary.org//face/arco-perpetuo", type="text/css", media="screen")
     link(rel="stylesheet", href="https://fontlibrary.org//face/grammatika", type="text/css", media="screen")
@@ -21,7 +20,7 @@ html
                 
             div
                 label(for="password") password
-                input(type="text", name="password" required)
+                input(type="password", name="password" required)
                 
             button(type="submit") login
             p Don't have an account? 
