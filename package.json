@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest --watch --detectOpenHandles ",
     "dev": "SET NODE_ENV=development && nodemon server/server.js",
-    "start": "SET NODE_ENV=production && node server/server.js"
+    "start": "export NODE_ENV=production && node server/server.js"
   },
   "keywords": [],
   "author": "icep0ps",
