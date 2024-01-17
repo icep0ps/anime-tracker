@@ -9,35 +9,25 @@ class Entry {
       const { id, status, progress, rating, notes, started, finished } = request.body;
       const animeExists = await request.db.get.anime(id);
 
-      if (animeExists.length) {
-        await request.db.create.entry(
-          status,
-          progress,
-          rating,
-          notes,
-          started,
-          finished,
-          request.user.id,
-          id
-        );
-      } else {
+      if (animeExists.length === 0) {
         const anime = await Myanimelist.getAnimeDetails(id);
         await request.db.create.anime(anime);
-        await request.db.create.entry(
-          status,
-          progress,
-          rating,
-          notes,
-          started,
-          finished,
-          request.user.id,
-          id
-        );
       }
+
+      await request.db.create.entry(
+        status,
+        progress,
+        rating,
+        notes,
+        started,
+        finished,
+        request.user.id,
+        id
+      );
 
       return response.redirect('/');
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -46,7 +36,7 @@ class Entry {
       const entries = await request.db.get
         .entries(request.user.id)
         .catch((error) => next(error));
-      response.json({ data: entries });
+      return response.json({ data: entries });
     },
 
     async entry(request, response, next) {
@@ -54,14 +44,14 @@ class Entry {
       const entry = await request.db.get
         .entry(request.user.id, entry_id)
         .catch((error) => next(error));
-      response.json({ data: entry });
+      return response.json({ data: entry });
     },
   };
 
   static async update(request, response, next) {
     const entry = request.body;
     await request.db.update.entry(request.user.id, entry).catch((error) => next(error));
-    response.redirect('back');
+    return response.redirect('back');
   }
 
   static async delete(request, response, next) {

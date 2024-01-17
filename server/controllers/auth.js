@@ -4,10 +4,10 @@ import { validationResult } from 'express-validator';
 class Auth {
   static page = {
     signup(request, response, next) {
-      response.render('signup');
+      return response.render('signup');
     },
     login(request, response, next) {
-      response.render('login');
+      return response.render('login');
     },
   };
 
@@ -15,6 +15,7 @@ class Auth {
     const errors = validationResult(request);
     if (errors.array().length)
       return response.status(400).render('login', { errors: errors.array() });
+    return response.redirect('/');
   }
 
   static logout(request, response, next) {
@@ -22,7 +23,7 @@ class Auth {
       if (err) {
         return next(err);
       }
-      response.redirect('/');
+      return response.redirect('/');
     });
   }
 
@@ -59,7 +60,7 @@ class Auth {
                   return next(err);
                 }
 
-                response.redirect('/');
+                return response.redirect('/');
               });
             })
             .catch((err) => {

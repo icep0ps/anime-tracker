@@ -13,12 +13,9 @@ router.post(
   '/login',
   Validator.login,
   passport.authenticate('local', {
-    successRedirect: '/',
     failureRedirect: '/auth/login',
   }),
-  function (request, response) {
-    response.redirect('/');
-  }
+  Auth.login
 );
 router.post('/signup', Validator.signup, Auth.signup);
 

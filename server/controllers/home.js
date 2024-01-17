@@ -7,7 +7,7 @@ class Home {
     const animes = await request.db.get
       .entries(request.user.id)
       .catch((error) => next(error));
-    response.render('index', { list: Home.groupByStatus(animes) });
+    return response.render('index', { list: Home.groupByStatus(animes) });
   }
 
   static groupByStatus(animes) {
