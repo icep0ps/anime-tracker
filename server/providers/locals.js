@@ -3,7 +3,7 @@ class Locals {
     return {
       host:
         process.env.NODE_ENV.trim() === 'production'
-          ? process.env.DOCKER_HOST
+          ? process.env.APP_DOCKER_HOST
           : process.env.CLIENT_HOST,
       user: process.env.USER,
       secret: process.env.SECRET,
