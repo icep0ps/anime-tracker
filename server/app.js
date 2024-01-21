@@ -49,7 +49,7 @@ class App {
     passport.use(new LocalStrategy({ passReqToCallback: true }, Auth.authenticate));
     passport.serializeUser(function (user, cb) {
       process.nextTick(function () {
-        cb(null, { id: user.id, username: user.username });
+        return cb(null, { id: user.id, username: user.username });
       });
     });
     passport.deserializeUser(function (user, cb) {

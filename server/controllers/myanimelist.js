@@ -12,13 +12,15 @@ class Myanimelist {
         q: request.body.search,
         limit: 10,
       },
-    }).catch((error) => next(error));
-
+    }).catch((error) => {
+      next(error);
+      return;
+    });
     return response.render('search', { results: results.data });
   }
 
   static async getAnimeDetails(id) {
-    return await Fetcher.fetch('https://api.myanimelist.net/v2/anime/' + id, {
+    const data = await Fetcher.fetch('https://api.myanimelist.net/v2/anime/' + id, {
       headers: {
         'X-MAL-CLIENT-ID': Locals.config().apiClientId,
       },
@@ -26,6 +28,8 @@ class Myanimelist {
         fields: Anime.fields,
       },
     });
+
+    return data;
   }
 }
 export default Myanimelist;
