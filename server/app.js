@@ -29,7 +29,7 @@ class App {
 
     const exposeDatabase = (request, response, next) => {
       request.db = database;
-      next();
+      return next();
     };
 
     app.use(cors());
@@ -58,9 +58,13 @@ class App {
       });
     });
 
-    app.use((req, res, next) => {
-      res.locals.user = req.user;
-      next();
+    app.all(/^(?!\/auth).*$/, (req, res, next) => {
+      if (!req.user) {
+        res.redirect('/auth/login');
+      } else {
+        res.locals.user = req.user;
+        next();
+      }
     });
 
     app.get('/', exposeDatabase, homeRoute);
