@@ -13,8 +13,7 @@ class Myanimelist {
         limit: 10,
       },
     }).catch((error) => {
-      next(error);
-      return;
+      return next(error);
     });
     return response.render('search', { results: results.data });
   }

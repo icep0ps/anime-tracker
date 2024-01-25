@@ -142,7 +142,7 @@ class Database {
         .catch((error) => {
           throw new Error('Error getting entry from database ' + error);
         });
-      return results;
+      return results[0];
     },
 
     async anime(id) {
