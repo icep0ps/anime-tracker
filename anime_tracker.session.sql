@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `entry` (
 `started` DATE,
 `finished` DATE,
 `user_id` INT,
+`notes` TEXT,
 `anime_id` BIGINT,
 FOREIGN KEY(`user_id`) REFERENCES `user`(`id`), 
 FOREIGN KEY(`anime_id`) REFERENCES `anime`(`id`) ,
