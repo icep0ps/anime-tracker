@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `anime` (
   `alternative_titles` JSON,
   `start_date` VARCHAR(1024),
   `end_date` VARCHAR(1024),
-  `synopsis` VARCHAR(1024),
+  `synopsis` TEXT,
   `mean` DOUBLE,
   `rank` BIGINT,
   `popularity` BIGINT,

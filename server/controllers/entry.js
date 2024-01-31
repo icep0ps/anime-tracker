@@ -1,4 +1,3 @@
-import { error } from 'console';
 import Myanimelist from './myanimelist.js';
 
 class Entry {
@@ -7,26 +6,30 @@ class Entry {
 
   static async create(request, response, next) {
     const { id, status, progress, rating, notes, started, finished } = request.body;
-    const animeExists = await request.db.get.anime(id).catch((error) => {
+
+    try {
+      const animeExists = await request.db.get.anime(id);
+
+      if (animeExists.length === 0) {
+        const anime = await Myanimelist.getAnimeDetails(id);
+        await request.db.create.anime(anime);
+      }
+
+      await request.db.create.entry(
+        status,
+        progress,
+        rating,
+        notes,
+        started,
+        finished,
+        request.user.id,
+        id
+      );
+
+      return response.redirect('/');
+    } catch (error) {
       return next(error);
-    });
-
-    if (animeExists.length === 0) {
-      const anime = await Myanimelist.getAnimeDetails(id).catch((error) => {
-        return next(error);
-      });
-      await request.db.create.anime(anime).catch((error) => {
-        return next(error);
-      });
     }
-
-    await request.db.create
-      .entry(status, progress, rating, notes, started, finished, request.user.id, id)
-      .catch((error) => {
-        return next(error);
-      });
-
-    return response.redirect('/');
   }
 
   static get = {

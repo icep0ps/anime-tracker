@@ -32,22 +32,26 @@ class Database {
     async entry(status, progress, rating, notes, started, finished, userid, animeid) {
       const connection = await Database.connect();
       const [results] = await connection
-        .execute('INSERT INTO `entry` VALUES (?,?,?,?,?,?,?,?);', [
-          status,
-          rating,
-          progress,
-          started,
-          finished ? finished : null,
-          notes,
-          userid,
-          animeid,
-        ])
+        .execute(
+          'INSERT INTO `entry` (status, rating, progress, started, finished, user_id, notes, anime_id) VALUES (?,?,?,?,?,?,?,?);',
+          [
+            status,
+            rating,
+            progress,
+            started,
+            finished ? finished : null,
+            userid,
+            notes,
+            animeid,
+          ]
+        )
         .catch((error) => {
           throw new Error('Error creating entry in database ' + error);
         });
 
       return results;
     },
+
     async anime(anime) {
       const connection = await Database.connect();
       const {
