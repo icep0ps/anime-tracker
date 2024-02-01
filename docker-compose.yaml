@@ -19,5 +19,7 @@ services:
     ports:
       - '3307:3306'
     volumes:
+      - .:/app
+      - /app/node_modules
       - ./anime_tracker.session.sql:/tmp/database/anime_tracker.session.sql
     command: mysqld --init-file="/tmp/database/anime_tracker.session.sql"
