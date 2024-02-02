@@ -15,7 +15,6 @@ services:
     disk:
       name: mysql
       mountPath: /var/lib/mysql
-      sizeGB: 10
     envVars:
       - fromGroup: mysql
 
@@ -23,7 +22,12 @@ envVarGroups:
   - name: mysql
     envVars:
       - key: MYSQL_DATABASE
+        fromService:
+          type: web
+          name: anime_tracker_app
+          property: DATABASE
       - key: MYSQL_USER
+        value: %
       - key: MYSQL_PASSWORD
         generateValue: true
       - key: MYSQL_ROOT_PASSWORD
