@@ -2,11 +2,11 @@ services:
   - type: web
     name: anime_tracker_app
     runtime: docker
-    repo: https://github.com/icep0ps/anime-tracker 
+    repo: https://github.com/icep0ps/anime-tracker
     region: frankfurt
-    plan: free 
-    branch: main 
-        
+    plan: free
+    branch: main
+
   - type: pserv
     name: mysql
     plan: free
@@ -17,14 +17,14 @@ services:
       mountPath: /var/lib/mysql
       sizeGB: 10
     envVars:
-    - fromGroup: mysql
-  
-  envVarGroups:
+      - fromGroup: mysql
+
+envVarGroups:
   - name: mysql
     envVars:
-    - key: MYSQL_DATABASE
-    - key: MYSQL_USER
-    - key: MYSQL_PASSWORD
-      generateValue: true
-    - key: MYSQL_ROOT_PASSWORD
-      generateValue: true
+      - key: MYSQL_DATABASE
+      - key: MYSQL_USER
+      - key: MYSQL_PASSWORD
+        generateValue: true
+      - key: MYSQL_ROOT_PASSWORD
+        generateValue: true
