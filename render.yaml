@@ -1,12 +1,11 @@
 services:
-  # A Docker web service
   - type: web
     name: anime_tracker_app
     runtime: docker
-    repo: https://github.com/icep0ps/anime-tracker # optional
-    region: frankfurt # optional (defaults to oregon)
-    plan: free # optional (defaults to starter instance type)
-    branch: main # optional (defaults to master)
+    repo: https://github.com/icep0ps/anime-tracker 
+    region: frankfurt
+    plan: free 
+    branch: main 
         
   - type: pserv
     name: mysql
