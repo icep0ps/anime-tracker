@@ -7,7 +7,7 @@ services:
     plan: free
     branch: main
 
-  - type: pserv
+  - type: web
     name: mysql
     plan: free
     env: docker
