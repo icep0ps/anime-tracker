@@ -27,7 +27,7 @@ envVarGroups:
           name: anime_tracker_app
           property: DATABASE
       - key: MYSQL_USER
-        value: %
+        value: '%'
       - key: MYSQL_PASSWORD
         generateValue: true
       - key: MYSQL_ROOT_PASSWORD
