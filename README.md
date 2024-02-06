@@ -20,10 +20,6 @@ git clone https://github.com/icep0ps/anime-tracker.git
 
 2. Copy the .env.example to .env and update the variables.
 
-```
-git clone https://github.com/sadmann7/shadcn-table
-```
-
 3. Start docker containers
 
 ```
