@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watch --detectOpenHandles ",
-    "dev": "SET NODE_ENV=development && nodemon server/server.js",
+    "dev": "export NODE_ENV=development && nodemon server/server.js",
     "start": "export NODE_ENV=production && node server/server.js"
   },
   "keywords": [],
@@ -23,6 +23,8 @@
     "mysql2": "^3.6.5",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
+    "pg": "^8.11.3",
+    "postgres": "^3.4.3",
     "pug": "^3.0.2"
   },
   "devDependencies": {
