@@ -14,6 +14,7 @@ router.post(
   Validator.login,
   passport.authenticate('local', {
     failureRedirect: '/auth/login',
+    failureMessage: true,
   }),
   Auth.login
 );
