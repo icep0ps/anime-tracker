@@ -1,59 +1,43 @@
 import 'dotenv/config';
-import mysql from 'mysql2/promise';
+import postgres from 'postgres';
 import Anime from '../controllers/entry.js';
 import Locals from './locals.js';
 
 class Database {
-  static async connect() {
+  static connect() {
     const { port, host, database, user, password } = Locals.config();
-
-    return mysql.createPool({
+    return postgres({
       host,
       user,
       database,
-      password,
       port,
-      waitForConnections: true,
-      connectionLimit: 10,
-      maxIdle: 10,
-      idleTimeout: 60000,
-      queueLimit: 0,
-      enableKeepAlive: true,
-      keepAliveInitialDelay: 0,
+      password,
     });
-  }
-
-  static async connection() {
-    const connection = await Database.connect();
-    return connection;
   }
 
   static create = {
     async entry(status, progress, rating, notes, started, finished, userid, animeid) {
-      const connection = await Database.connect();
-      const [results] = await connection
-        .execute(
-          'INSERT INTO `entry` (status, rating, progress, started, finished, user_id, notes, anime_id) VALUES (?,?,?,?,?,?,?,?);',
-          [
-            status,
-            rating,
-            progress,
-            started,
-            finished ? finished : null,
-            userid,
-            notes,
-            animeid,
-          ]
-        )
-        .catch((error) => {
+      const sql = await Database.connect();
+      const res = await sql`INSERT INTO entry ${sql([
+        status,
+        rating,
+        progress,
+        started,
+        finished ? finished : null,
+        userid,
+        notes,
+        animeid,
+      ])}(status, rating, progress, started, finished, user_id, notes, anime_id)`.catch(
+        (error) => {
           throw new Error('Error creating entry in database ' + error);
-        });
+        }
+      );
 
-      return results;
+      return res;
     },
 
     async anime(anime) {
-      const connection = await Database.connect();
+      const sql = await Database.connect();
       const {
         id,
         title,
@@ -90,54 +74,46 @@ class Database {
     },
 
     async user(user) {
-      const { username, email, password } = user;
-      const connection = await Database.connect().catch((error) => {
+      const sql = await Database.connect().catch((error) => {
         throw new Error('Error connection to database ' + error);
       });
-
-      const [results] = await connection
-        .execute('INSERT INTO `user` (username, password, email) VALUES (?,?,?);', [
-          username,
-          password,
-          email,
-        ])
-        .catch((error) => {
-          throw new Error('Error creating user in database ' + error);
-        });
-
-      return results;
+      const res = await sql`INSERT INTO user ${sql(
+        user,
+        'username',
+        'password',
+        'email'
+      )}`.catch((error) => {
+        throw new Error('Error creating user in database ' + error);
+      });
+      return res;
     },
   };
 
   static get = {
-    async user(username, password) {
-      const connection = await Database.connect();
-      const [results] = await connection
-        .query('SELECT * FROM `user` WHERE `username` = ? AND `password` = ?;', [
-          username,
-          password,
-        ])
-        .catch((error) => {
-          throw new Error('Error getting anime in database: ' + error);
-        });
-      return results;
+    async user(username) {
+      const sql = Database.connect();
+      const res = await sql`SELECT * FROM "User" WHERE username = ${username};`.catch(
+        (error) => {
+          throw new Error('Error getting user in database: ' + error);
+        }
+      );
+      return res[0];
     },
 
     async entries(userid) {
-      const connection = await Database.connect();
-      const [results] = await connection
-        .query(
-          'SELECT entry.user_id, anime.main_picture,anime.id , anime.title, entry.rating, progress, entry.status, anime.num_episodes FROM `entry` INNER JOIN `anime` ON entry.anime_id=anime.id WHERE entry.user_id=?;',
-          [userid]
-        )
-        .catch((error) => {
-          throw new Error('Error getting anime list from database ' + error);
-        });
-      return results;
+      const sql = Database.connect();
+      const res =
+        await sql`SELECT entry.user_id, anime.main_picture,anime.id , anime.title, entry.rating, progress, entry.status, anime.num_episodes FROM entry INNER JOIN anime ON entry.anime_id=anime.id WHERE entry.user_id=${userid};`.catch(
+          (error) => {
+            throw new Error('Error getting anime list from database ' + error);
+          }
+        );
+      if (res.count === 0) return [];
+      return res[0];
     },
 
     async entry(userid, entryid) {
-      const connection = await Database.connect();
+      const sql = await Database.connect();
       const [results] = await connection
         .query(
           'SELECT entry.user_id, anime.main_picture,anime.id , anime.title, entry.rating, progress, entry.status, anime.num_episodes, entry.notes, entry.started, entry.finished FROM `entry` INNER JOIN `anime` ON entry.anime_id=anime.id WHERE entry.user_id = ? AND entry.anime_id = ?;',
@@ -150,7 +126,7 @@ class Database {
     },
 
     async anime(id) {
-      const connection = await Database.connect();
+      const sql = await Database.connect();
       const [results] = await connection
         .query('SELECT * FROM `anime` WHERE `id` = ? ORDER BY `title`', [id])
         .catch((error) => {
@@ -164,7 +140,7 @@ class Database {
     async entry(userid, entry) {
       const { id, rating, progress, status, notes, started, finished } = entry;
 
-      const connection = await Database.connect().catch((error) => {
+      const sql = await Database.connect().catch((error) => {
         throw new Error('Error connection to database ' + error);
       });
 
@@ -192,7 +168,7 @@ class Database {
 
   static delete = {
     async entry(userid, entryid) {
-      const connection = await Database.connect().catch((error) => {
+      const sql = await Database.connect().catch((error) => {
         throw new Error('Error connection to database ' + error);
       });
 
