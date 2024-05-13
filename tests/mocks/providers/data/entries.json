@@ -1,0 +1,122 @@
+[
+  {
+    "status": "Watching",
+    "rating": 8,
+    "progress": 10,
+    "started": "2023-04-20",
+    "finished": null,
+    "user_id": 1,
+    "notes": "Exciting storyline!",
+    "anime_id": 1001
+  },
+  {
+    "status": "Completed",
+    "rating": 9,
+    "progress": 100,
+    "started": "2022-10-01",
+    "finished": "2023-03-25",
+    "user_id": 2,
+    "notes": "One of the best anime I've watched!",
+    "anime_id": 1002
+  },
+  {
+    "status": "Plan to Watch",
+    "rating": null,
+    "progress": 0,
+    "started": null,
+    "finished": null,
+    "user_id": 1,
+    "notes": null,
+    "anime_id": 1003
+  },
+  {
+    "status": "Watching",
+    "rating": 7,
+    "progress": 30,
+    "started": "2023-05-01",
+    "finished": null,
+    "user_id": 2,
+    "notes": "Interesting characters!",
+    "anime_id": 1003
+  },
+  {
+    "status": "Completed",
+    "rating": 10,
+    "progress": 100,
+    "started": "2023-01-15",
+    "finished": "2023-06-30",
+    "user_id": 1,
+    "notes": "Absolutely loved it!",
+    "anime_id": 1004
+  },
+  {
+    "status": "Completed",
+    "rating": 8,
+    "progress": 100,
+    "started": "2022-12-10",
+    "finished": "2023-05-05",
+    "user_id": 2,
+    "notes": "Epic adventure!",
+    "anime_id": 1004
+  },
+  {
+    "status": "Completed",
+    "rating": 9,
+    "progress": 100,
+    "started": "2023-03-10",
+    "finished": "2023-09-25",
+    "user_id": 1,
+    "notes": "Amazing story!",
+    "anime_id": 1005
+  },
+  {
+    "status": "Dropped",
+    "rating": null,
+    "progress": 5,
+    "started": "2023-04-20",
+    "finished": null,
+    "user_id": 2,
+    "notes": "Couldn't get into it.",
+    "anime_id": 1005
+  },
+  {
+    "status": "Watching",
+    "rating": null,
+    "progress": 50,
+    "started": "2023-05-10",
+    "finished": null,
+    "user_id": 1,
+    "notes": "Intriguing plot!",
+    "anime_id": 1006
+  },
+  {
+    "status": "Watching",
+    "rating": null,
+    "progress": 20,
+    "started": "2023-04-05",
+    "finished": null,
+    "user_id": 2,
+    "notes": "Suspenseful!",
+    "anime_id": 1006
+  },
+  {
+    "status": "Completed",
+    "rating": 9,
+    "progress": 100,
+    "started": "2023-02-20",
+    "finished": "2023-08-10",
+    "user_id": 1,
+    "notes": "Mind-bending!",
+    "anime_id": 1007
+  },
+  {
+    "status": "Completed",
+    "rating": 8,
+    "progress": 100,
+    "started": "2022-11-10",
+    "finished": "2023-04-30",
+    "user_id": 2,
+    "notes": "Beautiful animation!",
+    "anime_id": 1007
+  }
+]

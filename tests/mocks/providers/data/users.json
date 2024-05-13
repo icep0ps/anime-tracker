@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "username": "anime_lover123",
+    "password": "bed806e50fd8ec1823360a7011e3f846f496cf4615f56a57a17a29892053359a",
+    "salt": "67f8a7c9c67ef52b8df196cbd6261289",
+    "joined": "2023-04-15",
+    "email": "anime_lover123@example.com"
+  },
+  {
+    "id": 2,
+    "username": "otaku_girl",
+    "password": "7c6173b6ec6365cab93b0ef098a6d69aaa9abd1d1c3cc8900d7396416251821a",
+    "salt": "fb605662c4c5fa76f214f43efe036b5c",
+    "joined": "2023-05-20",
+    "email": "otaku_girl@example.com"
+  }
+]
