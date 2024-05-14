@@ -65,14 +65,11 @@ const loadAnimeData = async (animeid) => {
 };
 
 const deleteEntry = async (event) => {
-  const res = await fetch('http://localhost:3000/entry/', {
-    method: 'delete',
-    body: JSON.stringify({
-      user_id: 1,
-      anime_id: event.currentTarget.id,
-    }),
-    headers: { 'Content-Type': 'application/json' },
+  const res = await fetch('http://localhost:3000/entry/' + event.currentTarget.id, {
+    method: 'DELETE',
   });
+
+  console.log(res.ok);
 
   if (res.ok) window.location.reload();
 };
