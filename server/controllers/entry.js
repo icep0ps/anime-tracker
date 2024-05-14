@@ -15,16 +15,16 @@ class Entry {
         await request.db.create.anime(anime);
       }
 
-      await request.db.create.entry(
+      await request.db.create.entry({
         status,
         progress,
         rating,
         notes,
-        started,
-        finished,
-        request.user.id,
-        id
-      );
+        started: started !== '' ? started : null,
+        finished: finished !== '' ? finished : null,
+        user_id: request.user.id,
+        anime_id: id,
+      });
 
       return response.redirect('/');
     } catch (error) {
@@ -34,37 +34,44 @@ class Entry {
 
   static get = {
     async entries(request, response, next) {
-      const entries = await request.db.get
-        .entries(request.user.id)
-        .catch((error) => next(error));
-      return response.json({ data: entries });
+      try {
+        const entries = await request.db.get.entries(request.user.id);
+        return response.json({ data: entries });
+      } catch (error) {
+        return next(error.message);
+      }
     },
 
     async entry(request, response, next) {
       const entry_id = request.params.id;
-      const entry = await request.db.get
-        .entry(request.user.id, entry_id)
-        .catch((error) => {
-          return next(error);
-        });
-      return response.json(entry);
+      try {
+        const entry = await request.db.get.entry(request.user.id, entry_id);
+        return response.json(entry ? entry : null);
+      } catch (error) {
+        return next(error.message);
+      }
     },
   };
 
   static async update(request, response, next) {
     const entry = request.body;
-    await request.db.update.entry(request.user.id, entry).catch((error) => next(error));
-    return response.redirect('back');
+    try {
+      await request.db.update.entry(request.user.id, entry);
+      return response.redirect('back');
+    } catch (error) {
+      return next(error.message);
+    }
   }
 
   static async delete(request, response, next) {
-    const { anime_id, user_id } = request.body;
-    await request.db.delete
-      .entry(user_id, anime_id)
-      .then(() => {
-        return response.json({ msg: 'deleted anime from your entries' });
-      })
-      .catch((error) => next(error));
+    const user_id = request.user.id;
+    const anime_id = request.params.id;
+    try {
+      await request.db.delete.entry(user_id, anime_id);
+      return response.status(200).send('Entry deleted');
+    } catch (error) {
+      return next(error.message);
+    }
   }
 }
 
