@@ -15,6 +15,7 @@ import homeRoute from './routes/home/route.js';
 import entryRoute from './routes/entry/route.js';
 import searchRoute from './routes/search/route.js';
 import errorHandler from './middleware/errorHandler.js';
+
 import Locals from './providers/locals.js';
 
 class App {
@@ -37,34 +38,42 @@ class App {
     app.use(morgan('tiny'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
+
     app.use(
+      // cookie maxAge is set to 24 hours
       session({
+        name: 'session',
         secret: Locals.config().secret,
         resave: false,
         saveUninitialized: false,
+        cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 },
       })
     );
     app.use(passport.initialize());
     app.use(passport.session());
+    app.use(passport.authenticate('session', { successRedirect: '/' }));
     passport.use(new LocalStrategy({ passReqToCallback: true }, Auth.authenticate));
+
     passport.serializeUser(function (user, cb) {
       process.nextTick(function () {
         return cb(null, { id: user.id, username: user.username });
       });
     });
-    passport.deserializeUser(function (user, cb) {
-      process.nextTick(function () {
-        return cb(null, user);
-      });
+    passport.deserializeUser(async function (user, cb) {
+      try {
+        const autheduser = await database.get.user(user.username);
+        process.nextTick(function () {
+          return cb(null, autheduser);
+        });
+      } catch (error) {
+        return cb(`Error authenticating user session: ${error}`);
+      }
     });
 
-    app.all(/^(?!\/auth).*$/, (req, res, next) => {
-      if (!req.user) {
-        res.redirect('/auth/login');
-      } else {
-        res.locals.user = req.user;
-        next();
-      }
+    app.use(/^(?!\/auth).*$/, (req, res, next) => {
+      if (!req.user) return res.redirect('/auth/login');
+      res.locals.user = req.user;
+      return next();
     });
 
     app.get('/', exposeDatabase, homeRoute);
@@ -78,6 +87,7 @@ class App {
         console.log(`Listening on port ${port}`);
       });
     }
+
     return app;
   }
 }
