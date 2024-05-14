@@ -1,9 +1,5 @@
 class Home {
   static async load(request, response, next) {
-    if (!request.user) {
-      return response.redirect('/auth/login');
-    }
-
     const animes = await request.db.get
       .entries(request.user.id)
       .catch((error) => next(error));
