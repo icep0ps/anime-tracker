@@ -19,16 +19,20 @@ class Myanimelist {
   }
 
   static async getAnimeDetails(id) {
-    const data = await Fetcher.fetch('https://api.myanimelist.net/v2/anime/' + id, {
-      headers: {
-        'X-MAL-CLIENT-ID': Locals.config().apiClientId,
-      },
-      params: {
-        fields: Anime.fields,
-      },
-    });
+    try {
+      const data = await Fetcher.fetch('https://api.myanimelist.net/v2/anime/' + id, {
+        headers: {
+          'X-MAL-CLIENT-ID': Locals.config().apiClientId,
+        },
+        params: {
+          fields: Anime.fields,
+        },
+      });
 
-    return data;
+      return data;
+    } catch (error) {
+      throw new Error('Failed to get anime info from animelist');
+    }
   }
 }
 export default Myanimelist;
