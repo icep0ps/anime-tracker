@@ -2,15 +2,24 @@ import users from './data/users.json';
 import anime from './data/anime.json';
 import entries from './data/entries.json';
 
-import Entry from '../../mocks/classes/entry.js';
-
 class Database {
   static connect() {
     return Promise.resolve();
   }
 
   static create = {
-    async entry(status, progress, rating, notes, started, finished, userid, animeid) {},
+    async entry(status, progress, rating, notes, started, finished, userid, animeid) {
+      return Promise.resolve({
+        status,
+        rating,
+        progress,
+        started,
+        finished,
+        user_id: userid,
+        notes,
+        anime_id: animeid,
+      });
+    },
     async anime(anime) {},
     async user(user) {},
   };
@@ -26,7 +35,7 @@ class Database {
 
     async entry(userid, entryid) {
       return Promise.resolve(
-        entries.filter((entry) => entry.user_id == userid && entry.id == entryid)
+        entries.filter((entry) => entry.user_id == userid && entry.id == entryid)[0]
       );
     },
 
@@ -36,7 +45,11 @@ class Database {
   };
 
   static delete = {
-    async entry(userid, entryid) {},
+    async entry(userid, entryid) {
+      return Promise.resolve(
+        entries.filter((entry) => entry.user_id == userid && entry.id == entryid)[0]
+      );
+    },
   };
 }
 
